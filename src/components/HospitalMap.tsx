@@ -56,7 +56,13 @@ export function HospitalMap({ theme, hospitals }: { theme: Theme; hospitals: Hos
   const [status, setStatus] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null);
   const webviewRef = useRef<WebView>(null);
 
-  const html = useMemo(() => buildMapHtml(hospitals, userCoords), [hospitals, userCoords]);
+  // Keyed by content, not array identity — `hospitals` comes from a poll that
+  // returns a new array reference every few seconds even when nothing
+  // changed, which was reloading the WebView (and resetting zoom/pan/popups)
+  // on every tick.
+  const hospitalsKey = hospitals.map((h) => `${h.name}:${JSON.stringify(h.needs)}`).join('|');
+  const html = useMemo(() => buildMapHtml(hospitals, userCoords), [hospitalsKey, userCoords]);
+  const source = useMemo(() => ({ html }), [html]);
 
   async function locateMe() {
     const { status: permStatus } = await Location.requestForegroundPermissionsAsync();
@@ -106,7 +112,16 @@ export function HospitalMap({ theme, hospitals }: { theme: Theme; hospitals: Hos
         </View>
       )}
       <View style={[styles.mapWrap, { borderColor: theme.border }]}>
-        <WebView ref={webviewRef} source={{ html }} style={styles.map} javaScriptEnabled originWhitelist={['*']} />
+        <WebView
+          ref={webviewRef}
+          source={source}
+          style={styles.map}
+          javaScriptEnabled
+          domStorageEnabled
+          originWhitelist={['*']}
+          mixedContentMode="always"
+          setSupportMultipleWindows={false}
+        />
       </View>
     </View>
   );
