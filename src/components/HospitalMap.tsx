@@ -40,15 +40,21 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri', maxZoom: 18,
   }).addTo(map);
-  // Custom CSS-drawn pin instead of Leaflet's default image-based icon —
-  // the default icon's PNG assets load via an auto-detected CDN path that
-  // commonly fails inside a WebView, leaving markers invisible.
+  // Inline SVG pin instead of Leaflet's default image-based icon — the
+  // default icon's PNG assets load via an auto-detected CDN path that
+  // commonly fails inside a WebView, leaving markers invisible. An inline
+  // SVG needs no external fetch, so it renders reliably, and draws a real
+  // teardrop pin shape rather than a CSS-box approximation.
+  const pinSvg = '<svg width="28" height="38" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">' +
+    '<path d="M14 0C6.3 0 0 6.3 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.3 21.7 0 14 0z" fill="#C01429" stroke="#fff" stroke-width="1.5"/>' +
+    '<circle cx="14" cy="14" r="5.5" fill="#fff"/>' +
+    '</svg>';
   const hospitalIcon = L.divIcon({
     className: '',
-    html: '<div style="width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#C01429;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
-    iconSize: [26, 26],
-    iconAnchor: [13, 26],
-    popupAnchor: [0, -26],
+    html: pinSvg,
+    iconSize: [28, 38],
+    iconAnchor: [14, 38],
+    popupAnchor: [0, -34],
   });
   const markers = ${JSON.stringify(markers)};
   const group = markers.map(m => {
