@@ -19,7 +19,7 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
   return `<!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>html,body,#map{height:100%;margin:0;padding:0}
+<style>html,body,#map{height:100%;margin:0;padding:0;overflow:hidden}
 .popup b{font-size:13px}
 .popup .addr{font-size:11px;color:#555;margin:3px 0}
 </style></head>
@@ -121,6 +121,10 @@ export function HospitalMap({ theme, hospitals }: { theme: Theme; hospitals: Hos
           originWhitelist={['*']}
           mixedContentMode="always"
           setSupportMultipleWindows={false}
+          scrollEnabled={false}
+          bounces={false}
+          overScrollMode="never"
+          nestedScrollEnabled
         />
       </View>
     </View>
