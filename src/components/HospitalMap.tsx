@@ -31,9 +31,19 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors', maxZoom: 18,
   }).addTo(map);
+  // Custom CSS-drawn pin instead of Leaflet's default image-based icon —
+  // the default icon's PNG assets load via an auto-detected CDN path that
+  // commonly fails inside a WebView, leaving markers invisible.
+  const hospitalIcon = L.divIcon({
+    className: '',
+    html: '<div style="width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#C01429;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+    iconSize: [26, 26],
+    iconAnchor: [13, 26],
+    popupAnchor: [0, -26],
+  });
   const markers = ${JSON.stringify(markers)};
   const group = markers.map(m => {
-    const mk = L.marker(m.coords).addTo(map);
+    const mk = L.marker(m.coords, { icon: hospitalIcon }).addTo(map);
     mk.bindPopup('<div class="popup"><b>' + m.name + '</b><div class="addr">' + m.address + '<br>' + m.phone + '</div><div>' + m.needs + '</div></div>');
     return mk;
   });
@@ -41,10 +51,13 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
   const youIcon = L.divIcon({ className: '', html: '<div style="width:16px;height:16px;border-radius:50%;background:#C01429;border:3px solid #fff;box-shadow:0 0 0 2px #C01429"></div>', iconSize: [16,16] });
   L.marker([${userCoords[0]}, ${userCoords[1]}], { icon: youIcon }).addTo(map);
   ` : ''}
+  // Bounds always fit the hospitals only — a user location that's far off
+  // (a bad GPS/network fix) would otherwise stretch the view out until the
+  // hospitals themselves become tiny or disappear off-screen.
   if (group.length) {
     setTimeout(() => {
       map.invalidateSize();
-      map.fitBounds(L.featureGroup(${userCoords ? 'group.concat([L.marker([' + userCoords[0] + ',' + userCoords[1] + '])])' : 'group'}).getBounds().pad(0.2));
+      map.fitBounds(L.featureGroup(group).getBounds().pad(0.2));
     }, 200);
   }
 </script>
@@ -72,7 +85,7 @@ export function HospitalMap({ theme, hospitals }: { theme: Theme; hospitals: Hos
     }
     setStatus({ kind: 'ok', text: 'Locating you…' });
     try {
-      const pos = await Location.getCurrentPositionAsync({});
+      const pos = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
       const coords: [number, number] = [pos.coords.latitude, pos.coords.longitude];
       setUserCoords(coords);
       let nearest: { name: string; km: number } | null = null;
