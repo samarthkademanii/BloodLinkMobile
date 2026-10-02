@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTheme } from '@/theme/colors';
+import { fonts } from '@/theme/fonts';
 import { bloodTypes, drives, type BloodType } from '@/data/mockData';
 import { apiPost } from '@/data/api';
 import { Card, PrimaryButton, SectionHeader } from '@/components/ui';
@@ -47,7 +48,7 @@ export default function Donate() {
         {infoCards.map((c) => (
           <Card key={c.title} theme={theme} style={{ padding: 14 }}>
             <Text style={{ fontSize: 20, marginBottom: 6 }}>{c.icon}</Text>
-            <Text style={{ color: theme.fg, fontWeight: '700', fontSize: 13, marginBottom: 3 }}>{c.title}</Text>
+            <Text style={{ color: theme.fg, fontFamily: fonts.bodyBold, fontSize: 13, marginBottom: 3 }}>{c.title}</Text>
             <Text style={{ color: theme.fgMuted, fontSize: 12, lineHeight: 17 }}>{c.text}</Text>
           </Card>
         ))}
@@ -60,13 +61,13 @@ export default function Donate() {
         </Text>
 
         <Text style={[styles.label, { color: theme.fg }]}>Full Name</Text>
-        <TextInput value={name} onChangeText={setName} placeholder="Jane Doe" placeholderTextColor={theme.fgMuted} style={inputStyle} />
+        <TextInput value={name} onChangeText={setName} placeholder="Ananya Rao" placeholderTextColor={theme.fgMuted} style={inputStyle} />
 
         <Text style={[styles.label, { color: theme.fg }]}>Email</Text>
         <TextInput
           value={email}
           onChangeText={setEmail}
-          placeholder="jane@example.com"
+          placeholder="ananya@example.com"
           placeholderTextColor={theme.fgMuted}
           keyboardType="email-address"
           autoCapitalize="none"
@@ -77,14 +78,14 @@ export default function Donate() {
         <TextInput
           value={phone}
           onChangeText={setPhone}
-          placeholder="+1 555 000 0000"
+          placeholder="+91 98765 43210"
           placeholderTextColor={theme.fgMuted}
           keyboardType="phone-pad"
           style={inputStyle}
         />
 
-        <Text style={[styles.label, { color: theme.fg }]}>City</Text>
-        <TextInput value={city} onChangeText={setCity} placeholder="San Francisco" placeholderTextColor={theme.fgMuted} style={inputStyle} />
+        <Text style={[styles.label, { color: theme.fg }]}>Locality</Text>
+        <TextInput value={city} onChangeText={setCity} placeholder="Koramangala, Bengaluru" placeholderTextColor={theme.fgMuted} style={inputStyle} />
 
         <Text style={[styles.label, { color: theme.fg }]}>Blood Type</Text>
         <View style={styles.typeGrid}>
@@ -99,7 +100,7 @@ export default function Donate() {
                   { backgroundColor: active ? theme.accent : theme.bg, borderColor: active ? theme.accent : theme.border },
                 ]}
               >
-                <Text style={{ color: active ? '#fff' : theme.fg, fontWeight: '700', fontSize: 13 }}>{t}</Text>
+                <Text style={{ color: active ? '#fff' : theme.fg, fontFamily: fonts.mono, fontSize: 13 }}>{t}</Text>
               </Pressable>
             );
           })}
@@ -111,7 +112,7 @@ export default function Donate() {
 
         {submitted && (
           <View style={[styles.success, { backgroundColor: theme.successSoft, borderColor: theme.success }]}>
-            <Text style={{ color: theme.success, fontWeight: '700', fontSize: 13 }}>
+            <Text style={{ color: theme.success, fontFamily: fonts.bodyBold, fontSize: 13 }}>
               ✓ Thank you! Your registration is submitted. A coordinator will reach out within 24 hours.
             </Text>
           </View>
@@ -122,7 +123,7 @@ export default function Donate() {
       <View style={{ gap: 10, marginBottom: 32 }}>
         {drives.map((d) => (
           <Card key={d.name} theme={theme} style={{ padding: 14 }}>
-            <Text style={{ color: theme.fg, fontWeight: '700', fontSize: 14 }}>{d.name}</Text>
+            <Text style={{ color: theme.fg, fontFamily: fonts.bodyBold, fontSize: 14 }}>{d.name}</Text>
             <Text style={{ color: theme.fgMuted, fontSize: 11, marginBottom: 8 }}>{d.loc}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
               <Text style={{ color: theme.fg, fontSize: 12 }}>📅 {d.date}</Text>
@@ -132,7 +133,7 @@ export default function Donate() {
                   { backgroundColor: d.slots < 10 ? theme.warningSoft : theme.successSoft },
                 ]}
               >
-                <Text style={{ fontSize: 11, fontWeight: '700', color: d.slots < 10 ? theme.warning : theme.success }}>
+                <Text style={{ fontSize: 11, fontFamily: fonts.bodyBold, color: d.slots < 10 ? theme.warning : theme.success }}>
                   {d.slots} slots left
                 </Text>
               </View>
@@ -146,10 +147,10 @@ export default function Donate() {
 
 const styles = StyleSheet.create({
   content: { padding: 16, paddingBottom: 32 },
-  pageTitle: { fontSize: 22, fontWeight: '700', marginBottom: 14 },
-  formTitle: { fontSize: 18, fontWeight: '700', marginBottom: 2 },
-  label: { fontSize: 12, fontWeight: '700', marginTop: 12, marginBottom: 5 },
-  input: { borderWidth: 1.5, borderRadius: 8, paddingHorizontal: 12, paddingVertical: Platform.select({ ios: 10, default: 8 }), fontSize: 13 },
+  pageTitle: { fontFamily: fonts.display, fontSize: 24, marginBottom: 14 },
+  formTitle: { fontFamily: fonts.display, fontSize: 20, marginBottom: 2 },
+  label: { fontFamily: fonts.bodyBold, fontSize: 12, marginTop: 12, marginBottom: 5 },
+  input: { borderWidth: 1.5, borderRadius: 8, paddingHorizontal: 12, paddingVertical: Platform.select({ ios: 10, default: 8 }), fontSize: 13, fontFamily: fonts.body },
   typeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   typeChip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1.5 },
   success: { marginTop: 14, padding: 12, borderRadius: 8, borderWidth: 1 },

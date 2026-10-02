@@ -2,10 +2,12 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { useTheme } from '@/theme/colors';
+import { fonts } from '@/theme/fonts';
 import { useInventory, useBackendConnected, totalUnits } from '@/data/InventoryContext';
 import { usePoll } from '@/data/usePoll';
-import { bloodTypes, donors as mockDonors, requests as mockRequests, levelColor, levelStatus, timeAgo, type Donor, type BloodRequest } from '@/data/mockData';
+import { bloodTypes, donors as mockDonors, requests as mockRequests, hospitals as mockHospitals, levelColor, levelStatus, timeAgo, type Donor, type BloodRequest, type Hospital } from '@/data/mockData';
 import { Badge, Card, LiveDot, SectionHeader, StatCard } from '@/components/ui';
+import { HospitalMap } from '@/components/HospitalMap';
 
 export default function Dashboard() {
   const theme = useTheme();
@@ -14,6 +16,7 @@ export default function Dashboard() {
   const units = totalUnits(inventory);
   const { data: donors } = usePoll<Donor[]>('/donors', mockDonors);
   const { data: requests } = usePoll<BloodRequest[]>('/requests', mockRequests);
+  const { data: hospitals } = usePoll<Hospital[]>('/hospitals', mockHospitals);
 
   return (
     <ScrollView
@@ -58,7 +61,7 @@ export default function Dashboard() {
         theme={theme}
         title="Active Requests"
         right={
-          <Text onPress={() => router.push('/find')} style={{ color: theme.accent, fontSize: 12, fontWeight: '700' }}>
+          <Text onPress={() => router.push('/find')} style={{ color: theme.accent, fontSize: 12, fontFamily: fonts.bodyBold }}>
             View all →
           </Text>
         }
@@ -96,7 +99,7 @@ export default function Dashboard() {
           return (
             <View key={d.name} style={[styles.row, i < donors.length - 1 && { borderBottomWidth: 1, borderBottomColor: theme.border }]}>
               <View style={[styles.avatar, { backgroundColor: theme.surface2, borderColor: theme.border }]}>
-                <Text style={{ color: theme.fgMuted, fontWeight: '700', fontSize: 13 }}>{initials}</Text>
+                <Text style={{ color: theme.fgMuted, fontFamily: fonts.bodyBold, fontSize: 13 }}>{initials}</Text>
               </View>
               <View style={{ flex: 1, minWidth: 0 }}>
                 <Text style={[styles.rowTitle, { color: theme.fg }]}>{d.name}</Text>
@@ -104,33 +107,36 @@ export default function Dashboard() {
                   {d.city} · {d.daysSinceDonation === 0 ? 'Donated today' : `Last donated ${d.daysSinceDonation}d ago`}
                 </Text>
               </View>
-              <Text style={{ color: theme.accent, fontWeight: '700', fontSize: 13 }}>{d.type}</Text>
+              <Text style={{ color: theme.accent, fontFamily: fonts.mono, fontSize: 13 }}>{d.type}</Text>
               <View style={[styles.dot, { backgroundColor: dotColor }]} />
             </View>
           );
         })}
       </Card>
+
+      <SectionHeader theme={theme} title="Hospital Locator" right={<Text style={{ color: theme.fgMuted, fontSize: 12 }}>Across India</Text>} />
+      <HospitalMap theme={theme} hospitals={hospitals} />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   content: { padding: 16, paddingBottom: 32 },
-  pageTitle: { fontSize: 26, fontWeight: '700' },
-  pageSub: { fontSize: 13, marginBottom: 16 },
+  pageTitle: { fontFamily: fonts.display, fontSize: 28 },
+  pageSub: { fontFamily: fonts.body, fontSize: 13, marginBottom: 16 },
   statGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 20 },
   inventoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 20 },
   bloodCard: { width: '23%', minWidth: 76, alignItems: 'center', padding: 10 },
-  bloodType: { fontFamily: undefined, fontSize: 17, fontWeight: '700' },
-  bloodUnits: { fontSize: 20, fontWeight: '700', marginTop: 4 },
-  bloodUnitsLabel: { fontSize: 9, marginBottom: 6 },
+  bloodType: { fontFamily: fonts.mono, fontSize: 17 },
+  bloodUnits: { fontFamily: fonts.monoMedium, fontSize: 20, marginTop: 4 },
+  bloodUnitsLabel: { fontFamily: fonts.body, fontSize: 9, marginBottom: 6 },
   barBg: { width: '100%', height: 4, borderRadius: 2, marginTop: 8, overflow: 'hidden' },
   barFill: { height: '100%', borderRadius: 2 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 11, paddingHorizontal: 14 },
   bloodBadge: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
-  bloodBadgeText: { fontSize: 10, fontWeight: '700' },
-  rowTitle: { fontSize: 13, fontWeight: '700' },
-  rowSub: { fontSize: 11, marginTop: 1 },
+  bloodBadgeText: { fontFamily: fonts.mono, fontSize: 10 },
+  rowTitle: { fontFamily: fonts.bodyBold, fontSize: 13 },
+  rowSub: { fontFamily: fonts.body, fontSize: 11, marginTop: 1 },
   avatar: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center', borderWidth: 1.5 },
   dot: { width: 8, height: 8, borderRadius: 4 },
 });

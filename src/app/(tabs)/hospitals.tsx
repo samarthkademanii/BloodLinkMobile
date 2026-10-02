@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/colors';
+import { fonts } from '@/theme/fonts';
 import { hospitals as mockHospitals, type Hospital, type BloodType, type StockLevel } from '@/data/mockData';
 import { usePoll } from '@/data/usePoll';
 import { Card, LiveDot, SectionHeader } from '@/components/ui';
@@ -32,7 +33,7 @@ export default function Hospitals() {
                 const c = chipColors(level);
                 return (
                   <View key={type} style={[styles.chip, { backgroundColor: c.bg }]}>
-                    <Text style={{ color: c.fg, fontSize: 11, fontWeight: '700' }}>{type}</Text>
+                    <Text style={{ color: c.fg, fontSize: 11, fontFamily: fonts.mono }}>{type}</Text>
                   </View>
                 );
               })}
@@ -47,7 +48,7 @@ export default function Hospitals() {
         <Text style={{ color: theme.fgMuted, fontSize: 12, lineHeight: 18 }}>
           Connect your blood bank to BloodLink to broadcast real-time inventory and receive donor matches. Reach
           out to our partnerships team at{' '}
-          <Text style={{ color: theme.accent, fontWeight: '700' }}>partners@bloodlink.org</Text> to get started —
+          <Text style={{ color: theme.accent, fontFamily: fonts.bodyBold }}>partners@bloodlink.org</Text> to get started —
           onboarding typically completes within 48 hours.
         </Text>
       </Card>
@@ -57,8 +58,8 @@ export default function Hospitals() {
 
 const styles = StyleSheet.create({
   content: { padding: 16, paddingBottom: 32 },
-  pageTitle: { fontSize: 22, fontWeight: '700', marginBottom: 14 },
-  hospitalName: { fontSize: 15, fontWeight: '700', marginBottom: 2 },
+  pageTitle: { fontFamily: fonts.display, fontSize: 24, marginBottom: 14 },
+  hospitalName: { fontFamily: fonts.bodyBold, fontSize: 15, marginBottom: 2 },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   chip: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 5 },
 });

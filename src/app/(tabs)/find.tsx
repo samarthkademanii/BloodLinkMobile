@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useTheme } from '@/theme/colors';
+import { fonts } from '@/theme/fonts';
 import { useInventory } from '@/data/InventoryContext';
 import { usePoll } from '@/data/usePoll';
 import { bloodTypes, compatibility, hospitals as mockHospitals, levelColor, type Hospital, type BloodType } from '@/data/mockData';
@@ -79,7 +80,7 @@ export default function FindBlood() {
                 <View style={styles.resultTop}>
                   <Text style={[styles.resultType, { color }]}>{r.type}</Text>
                   <Text style={{ color: theme.fgMuted, fontSize: 11, textAlign: 'right' }}>
-                    <Text style={{ color, fontSize: 16, fontWeight: '700' }}>{r.units}</Text>{'\n'}units
+                    <Text style={{ color, fontSize: 16, fontFamily: fonts.monoMedium }}>{r.units}</Text>{'\n'}units
                   </Text>
                 </View>
                 <Text style={[styles.resultHospital, { color: theme.fg }]}>{r.hospital}</Text>
@@ -121,7 +122,7 @@ export default function FindBlood() {
                         { backgroundColor: can ? theme.successSoft : theme.surface2 },
                       ]}
                     >
-                      <Text style={{ fontSize: 9, color: can ? theme.success : theme.fgMuted, fontWeight: '700' }}>
+                      <Text style={{ fontSize: 9, color: can ? theme.success : theme.fgMuted, fontFamily: fonts.bodyBold }}>
                         {can ? '✓' : '–'}
                       </Text>
                     </View>
@@ -138,17 +139,17 @@ export default function FindBlood() {
 
 const styles = StyleSheet.create({
   content: { padding: 16, paddingBottom: 32 },
-  pageTitle: { fontSize: 22, fontWeight: '700', marginBottom: 14 },
-  search: { borderWidth: 1.5, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 13, marginBottom: 12 },
-  chip: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, borderWidth: 1.5, fontSize: 12, fontWeight: '700', overflow: 'hidden' },
+  pageTitle: { fontFamily: fonts.display, fontSize: 24, marginBottom: 14 },
+  search: { borderWidth: 1.5, borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 13, marginBottom: 12, fontFamily: fonts.body },
+  chip: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, borderWidth: 1.5, fontSize: 12, fontFamily: fonts.monoMedium, overflow: 'hidden' },
   resultsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 24 },
   resultCard: { width: '47%', padding: 12, gap: 6 },
   resultTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
-  resultType: { fontSize: 22, fontWeight: '700' },
-  resultHospital: { fontSize: 13, fontWeight: '700' },
+  resultType: { fontFamily: fonts.mono, fontSize: 22 },
+  resultHospital: { fontFamily: fonts.bodyBold, fontSize: 13 },
   compatRow: { flexDirection: 'row', alignItems: 'center' },
-  compatHeadCell: { width: 40, fontSize: 10, fontWeight: '700', textAlign: 'center', paddingVertical: 6 },
-  compatDonorCell: { width: 40, fontSize: 11, fontWeight: '700', paddingVertical: 8, textAlign: 'center' },
+  compatHeadCell: { fontFamily: fonts.monoMedium, width: 40, fontSize: 10, textAlign: 'center', paddingVertical: 6 },
+  compatDonorCell: { fontFamily: fonts.monoMedium, width: 40, fontSize: 11, paddingVertical: 8, textAlign: 'center' },
   compatCellWrap: { width: 40, alignItems: 'center', justifyContent: 'center' },
   compatDot: { width: 18, height: 18, borderRadius: 9, alignItems: 'center', justifyContent: 'center' },
 });

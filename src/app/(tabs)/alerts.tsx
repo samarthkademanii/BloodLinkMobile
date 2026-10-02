@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/colors';
+import { fonts } from '@/theme/fonts';
 import { alerts as mockAlerts, timeAgo, type Alert } from '@/data/mockData';
 import { usePoll } from '@/data/usePoll';
 import { Card, LiveDot, PrimaryButton, SectionHeader } from '@/components/ui';
@@ -53,8 +54,8 @@ const styles = StyleSheet.create({
   content: { padding: 16, paddingBottom: 32 },
   card: { flexDirection: 'row', gap: 12, padding: 14, borderWidth: 1.5 },
   icon: { width: 36, height: 36, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
-  title: { fontSize: 13, fontWeight: '700', marginBottom: 3 },
-  text: { fontSize: 12, lineHeight: 17, marginBottom: 6 },
-  meta: { fontSize: 11, marginBottom: 8 },
+  title: { fontFamily: fonts.bodyBold, fontSize: 13, marginBottom: 3 },
+  text: { fontFamily: fonts.body, fontSize: 12, lineHeight: 17, marginBottom: 6 },
+  meta: { fontFamily: fonts.body, fontSize: 11, marginBottom: 8 },
   actions: { flexDirection: 'row', gap: 8 },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import type { Theme } from '@/theme/colors';
+import { fonts } from '@/theme/fonts';
 
 export function Card({ theme, children, style }: { theme: Theme; children: React.ReactNode; style?: any }) {
   return (
@@ -114,22 +115,22 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   sectionTitle: {
-    fontSize: 17,
-    fontWeight: '700',
+    fontFamily: fonts.display,
+    fontSize: 19,
   },
   liveDotWrap: { flexDirection: 'row', alignItems: 'center', gap: 5 },
   liveDotCircle: { width: 7, height: 7, borderRadius: 4 },
-  liveDotText: { fontSize: 11, fontWeight: '700' },
+  liveDotText: { fontFamily: fonts.bodyBold, fontSize: 11 },
   badge: {
     paddingHorizontal: 7,
     paddingVertical: 3,
     borderRadius: 4,
     alignSelf: 'flex-start',
   },
-  badgeText: { fontSize: 9, fontWeight: '700', letterSpacing: 0.4, textTransform: 'uppercase' },
-  statLabel: { fontSize: 10, fontWeight: '700', letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 4 },
-  statValue: { fontSize: 24, fontWeight: '700' },
-  statDelta: { fontSize: 11, marginTop: 3 },
+  badgeText: { fontFamily: fonts.bodyBold, fontSize: 9, letterSpacing: 0.4, textTransform: 'uppercase' },
+  statLabel: { fontFamily: fonts.bodyBold, fontSize: 10, letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 4 },
+  statValue: { fontFamily: fonts.monoMedium, fontSize: 24 },
+  statDelta: { fontFamily: fonts.body, fontSize: 11, marginTop: 3 },
   btn: {
     paddingVertical: 10,
     paddingHorizontal: 16,
@@ -138,5 +139,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  btnText: { fontSize: 13, fontWeight: '700' },
+  btnText: { fontFamily: fonts.bodyBold, fontSize: 13 },
 });
