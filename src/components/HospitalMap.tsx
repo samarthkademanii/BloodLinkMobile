@@ -27,7 +27,13 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  const map = L.map('map').setView([${INDIA_CENTER[0]}, ${INDIA_CENTER[1]}], 5);
+  // Locked to India — this app has no hospitals anywhere else, and panning
+  // out of the region is what surfaced place names in non-English scripts
+  // (OpenStreetMap renders each place's local name when no English tag
+  // exists for it, which is most of the map outside well-mapped areas).
+  const INDIA_BOUNDS = L.latLngBounds([6, 68], [38, 98]);
+  const map = L.map('map', { maxBounds: INDIA_BOUNDS, maxBoundsViscosity: 1.0, minZoom: 4 })
+    .setView([${INDIA_CENTER[0]}, ${INDIA_CENTER[1]}], 5);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors', maxZoom: 18,
   }).addTo(map);
