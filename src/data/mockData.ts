@@ -38,14 +38,14 @@ export interface Donor {
 }
 
 export const donors: Donor[] = [
-  { name: 'Maria Santos', type: 'O−', city: 'Downtown', daysSinceDonation: 0, available: true },
-  { name: 'James Okonkwo', type: 'A+', city: 'Midtown', daysSinceDonation: 12, available: true },
-  { name: 'Priya Nair', type: 'B+', city: 'East Side', daysSinceDonation: 45, available: true },
-  { name: 'Chen Wei', type: 'AB+', city: 'Westpark', daysSinceDonation: 55, available: false },
-  { name: 'Sofia Martínez', type: 'O+', city: 'Northgate', daysSinceDonation: 3, available: true },
-  { name: 'Liam Osei', type: 'B−', city: 'Southville', daysSinceDonation: 8, available: true },
-  { name: 'Fatima Al-Hassan', type: 'A−', city: 'Old Quarter', daysSinceDonation: 30, available: false },
-  { name: 'David Park', type: 'O−', city: 'Harbor', daysSinceDonation: 0, available: true },
+  { name: 'Ananya Rao', type: 'O−', city: 'Indiranagar', daysSinceDonation: 0, available: true },
+  { name: 'Arjun Mehta', type: 'A+', city: 'Jayanagar', daysSinceDonation: 12, available: true },
+  { name: 'Priya Nair', type: 'B+', city: 'Koramangala', daysSinceDonation: 45, available: true },
+  { name: 'Rohan Kulkarni', type: 'AB+', city: 'Whitefield', daysSinceDonation: 55, available: false },
+  { name: 'Sneha Reddy', type: 'O+', city: 'HSR Layout', daysSinceDonation: 3, available: true },
+  { name: 'Vikram Shetty', type: 'B−', city: 'Electronic City', daysSinceDonation: 8, available: true },
+  { name: 'Fatima Sheikh', type: 'A−', city: 'Shivajinagar', daysSinceDonation: 30, available: false },
+  { name: 'Karthik Iyer', type: 'O−', city: 'Malleshwaram', daysSinceDonation: 0, available: true },
 ];
 
 export type Urgency = 'critical' | 'high' | 'standard';
@@ -60,11 +60,11 @@ export interface BloodRequest {
 }
 
 export const requests: BloodRequest[] = [
-  { patient: 'Patient #8841', type: 'O−', hospital: 'City General', urgency: 'critical', units: 2, createdAt: new Date(Date.now() - 8 * 60_000).toISOString() },
-  { patient: 'Patient #9204', type: 'AB+', hospital: 'Riverside Medical', urgency: 'critical', units: 4, createdAt: new Date(Date.now() - 22 * 60_000).toISOString() },
-  { patient: 'Patient #7719', type: 'B−', hospital: 'Northside ER', urgency: 'high', units: 1, createdAt: new Date(Date.now() - 60 * 60_000).toISOString() },
+  { patient: 'Patient #8841', type: 'O−', hospital: 'Bengaluru City', urgency: 'critical', units: 2, createdAt: new Date(Date.now() - 8 * 60_000).toISOString() },
+  { patient: 'Patient #9204', type: 'AB+', hospital: 'Whitefield Multispeciality', urgency: 'critical', units: 4, createdAt: new Date(Date.now() - 22 * 60_000).toISOString() },
+  { patient: 'Patient #7719', type: 'B−', hospital: 'Koramangala ER', urgency: 'high', units: 1, createdAt: new Date(Date.now() - 60 * 60_000).toISOString() },
   { patient: 'Patient #8003', type: 'A+', hospital: "St. Mary's", urgency: 'standard', units: 3, createdAt: new Date(Date.now() - 2 * 3_600_000).toISOString() },
-  { patient: 'Patient #9910', type: 'O+', hospital: 'Harbor View', urgency: 'standard', units: 2, createdAt: new Date(Date.now() - 3 * 3_600_000).toISOString() },
+  { patient: 'Patient #9910', type: 'O+', hospital: 'HSR Layout Medical', urgency: 'standard', units: 2, createdAt: new Date(Date.now() - 3 * 3_600_000).toISOString() },
 ];
 
 export function timeAgo(iso: string): string {
@@ -89,39 +89,39 @@ export interface Hospital {
 
 export const hospitals: Hospital[] = [
   {
-    name: 'City General Hospital',
-    address: '200 Medical Center Dr, Downtown',
-    phone: '+1 (555) 200-4000',
+    name: 'Bengaluru City Hospital',
+    address: '45 MG Road, Bengaluru',
+    phone: '+91 80 4012 3400',
     needs: { 'O−': 'critical', 'B−': 'critical', 'AB+': 'low', 'A+': 'ok', 'O+': 'ok' },
   },
   {
-    name: 'Riverside Medical Center',
-    address: '1 Riverside Blvd, Eastbank',
-    phone: '+1 (555) 300-7800',
+    name: 'Whitefield Multispeciality Hospital',
+    address: '12 ITPL Main Road, Whitefield, Bengaluru',
+    phone: '+91 80 4023 7800',
     needs: { 'AB+': 'critical', 'A−': 'low', 'B+': 'ok', 'O−': 'low' },
   },
   {
-    name: 'Northside Emergency',
-    address: '88 North Ave, Northgate',
-    phone: '+1 (555) 400-1122',
+    name: 'Koramangala Emergency Care',
+    address: '88 80 Feet Road, Koramangala, Bengaluru',
+    phone: '+91 80 4034 1122',
     needs: { 'B−': 'critical', 'O−': 'low', 'A+': 'ok', 'AB−': 'low' },
   },
   {
     name: "St. Mary's Hospital",
-    address: '45 Chapel Street, Midtown',
-    phone: '+1 (555) 500-3300',
+    address: '45 Sarjapur Road, Jayanagar, Bengaluru',
+    phone: '+91 80 4045 3300',
     needs: { 'O+': 'ok', 'A+': 'ok', 'B+': 'low', 'AB+': 'ok' },
   },
   {
-    name: 'Harbor View Medical',
-    address: '9 Harbor Road, Waterfront',
-    phone: '+1 (555) 600-9900',
+    name: 'HSR Layout Medical Centre',
+    address: '9 27th Main Road, HSR Layout, Bengaluru',
+    phone: '+91 80 4056 9900',
     needs: { 'O−': 'critical', 'O+': 'low', 'A−': 'ok', 'AB−': 'ok' },
   },
   {
-    name: 'Westpark Community',
-    address: '300 West Park Ave, Westside',
-    phone: '+1 (555) 700-4455',
+    name: 'Electronic City Community Hospital',
+    address: '300 Hosa Road, Electronic City, Bengaluru',
+    phone: '+91 80 4067 4455',
     needs: { 'A+': 'ok', 'B+': 'ok', 'O+': 'ok', 'AB+': 'low' },
   },
 ];
@@ -134,9 +134,9 @@ export interface Drive {
 }
 
 export const drives: Drive[] = [
-  { name: "St. Mary's Community Drive", loc: "St. Mary's Community Center, 120 Chapel St", date: 'Sat Oct 4, 9am – 3pm', slots: 12 },
-  { name: 'Downtown Civic Blood Drive', loc: 'City Hall Lobby, 1 Civic Plaza', date: 'Tue Oct 7, 10am – 6pm', slots: 20 },
-  { name: 'University Campus Drive', loc: 'Student Union Building, Room 102', date: 'Thu Oct 9, 11am – 5pm', slots: 8 },
+  { name: 'Cubbon Park Community Drive', loc: 'Cubbon Park, Bengaluru', date: 'Sat Oct 4, 9am – 3pm', slots: 12 },
+  { name: 'Indiranagar Civic Blood Drive', loc: '100 Feet Road Community Hall, Indiranagar', date: 'Tue Oct 7, 10am – 6pm', slots: 20 },
+  { name: 'City College Campus Drive', loc: 'Student Union Building, Bengaluru', date: 'Thu Oct 9, 11am – 5pm', slots: 8 },
 ];
 
 export type AlertLevel = 'critical' | 'warning' | 'info';
@@ -154,32 +154,32 @@ export const alerts: Alert[] = [
   {
     level: 'critical',
     icon: '🚨',
-    title: 'Critical shortage: O− at City General',
+    title: 'Critical shortage: O− at Bengaluru City Hospital',
     text: 'Only 2 units remain. O− is needed for emergency trauma patients. O− donors within 10 km have been notified.',
     createdAt: new Date(Date.now() - 8 * 60_000).toISOString(),
-    hospital: 'City General Hospital',
+    hospital: 'Bengaluru City Hospital',
   },
   {
     level: 'critical',
     icon: '🚨',
-    title: 'Urgent: AB+ needed at Riverside Medical',
+    title: 'Urgent: AB+ needed at Whitefield Multispeciality',
     text: 'Scheduled surgeries require 4 units of AB+ within 6 hours. Current stock critically low.',
     createdAt: new Date(Date.now() - 22 * 60_000).toISOString(),
-    hospital: 'Riverside Medical Center',
+    hospital: 'Whitefield Multispeciality Hospital',
   },
   {
     level: 'warning',
     icon: '⚠️',
-    title: 'Low B− supply — Northside ER',
+    title: 'Low B− supply — Koramangala Emergency Care',
     text: 'B− stock has dropped to 7 units city-wide. Routine surgeries may be affected if supplies are not replenished within 48 hours.',
     createdAt: new Date(Date.now() - 3_600_000).toISOString(),
-    hospital: 'Northside Emergency',
+    hospital: 'Koramangala Emergency Care',
   },
   {
     level: 'warning',
     icon: '📢',
     title: 'Blood drive this Saturday',
-    text: "St. Mary's Community Center is hosting a blood drive on Saturday Oct 4. 12 donor slots still available.",
+    text: 'Cubbon Park is hosting a blood drive on Saturday Oct 4. 12 donor slots still available.',
     createdAt: new Date(Date.now() - 3 * 3_600_000).toISOString(),
     hospital: null,
   },
