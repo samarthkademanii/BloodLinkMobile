@@ -32,7 +32,10 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
   // (OpenStreetMap renders each place's local name when no English tag
   // exists for it, which is most of the map outside well-mapped areas).
   const INDIA_BOUNDS = L.latLngBounds([6, 68], [38, 98]);
-  const map = L.map('map', { maxBounds: INDIA_BOUNDS, maxBoundsViscosity: 1.0, minZoom: 4 })
+  // fadeAnimation off: tiles occasionally get stuck at opacity 0 mid-fade
+  // in a WebView, leaving the map blank even though the tiles themselves
+  // loaded fine. Showing them immediately removes that failure mode.
+  const map = L.map('map', { maxBounds: INDIA_BOUNDS, maxBoundsViscosity: 1.0, minZoom: 4, fadeAnimation: false })
     .setView([${INDIA_CENTER[0]}, ${INDIA_CENTER[1]}], 5);
   // Esri's World Street Map is an English-language basemap by design, unlike
   // OpenStreetMap's default tiles which render each place's local-script
