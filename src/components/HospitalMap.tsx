@@ -59,10 +59,19 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
     iconAnchor: [14, 38],
     popupAnchor: [0, -34],
   });
+  // Hospital data can come from a public, unauthenticated registration
+  // endpoint with no sanitization, so it must be escaped before going into
+  // the popup's HTML — otherwise a malicious name/address/phone executes
+  // inside this WebView when the marker is tapped.
+  function escapeHtml(str) {
+    return String(str == null ? '' : str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
   const markers = ${JSON.stringify(markers)};
   const group = markers.map(m => {
     const mk = L.marker(m.coords, { icon: hospitalIcon }).addTo(map);
-    mk.bindPopup('<div class="popup"><b>' + m.name + '</b><div class="addr">' + m.address + '<br>' + m.phone + '</div><div>' + m.needs + '</div></div>');
+    mk.bindPopup('<div class="popup"><b>' + escapeHtml(m.name) + '</b><div class="addr">' + escapeHtml(m.address) + '<br>' + escapeHtml(m.phone) + '</div><div>' + escapeHtml(m.needs) + '</div></div>');
     return mk;
   });
   ${userCoords ? `
