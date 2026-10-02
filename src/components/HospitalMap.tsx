@@ -34,8 +34,11 @@ function buildMapHtml(hospitals: Hospital[], userCoords: [number, number] | null
   const INDIA_BOUNDS = L.latLngBounds([6, 68], [38, 98]);
   const map = L.map('map', { maxBounds: INDIA_BOUNDS, maxBoundsViscosity: 1.0, minZoom: 4 })
     .setView([${INDIA_CENTER[0]}, ${INDIA_CENTER[1]}], 5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors', maxZoom: 18,
+  // Esri's World Street Map is an English-language basemap by design, unlike
+  // OpenStreetMap's default tiles which render each place's local-script
+  // name whenever it has no separate English tag.
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri', maxZoom: 18,
   }).addTo(map);
   // Custom CSS-drawn pin instead of Leaflet's default image-based icon —
   // the default icon's PNG assets load via an auto-detected CDN path that
