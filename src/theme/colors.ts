@@ -1,4 +1,4 @@
-import { useColorScheme } from 'react-native';
+import { useThemeOverride } from './ThemeContext';
 
 const light = {
   bg: '#FAF7F8',
@@ -39,6 +39,6 @@ const dark = {
 export type Theme = typeof light;
 
 export function useTheme(): Theme {
-  const scheme = useColorScheme();
-  return scheme === 'dark' ? dark : light;
+  const { resolvedScheme } = useThemeOverride();
+  return resolvedScheme === 'dark' ? dark : light;
 }

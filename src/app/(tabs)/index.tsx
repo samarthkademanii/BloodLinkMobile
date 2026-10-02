@@ -24,7 +24,6 @@ export default function Dashboard() {
       contentContainerStyle={styles.content}
       contentInsetAdjustmentBehavior="automatic"
     >
-      <Text style={[styles.pageTitle, { color: theme.fg }]}>BloodLink</Text>
       <Text style={[styles.pageSub, { color: theme.fgMuted }]}>City-wide blood availability</Text>
 
       <View style={styles.statGrid}>

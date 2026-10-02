@@ -1,15 +1,26 @@
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { InventoryProvider } from '@/data/InventoryContext';
+import { ThemeOverrideProvider, useThemeOverride } from '@/theme/ThemeContext';
 import { useAppFonts } from '@/theme/fonts';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
+function AppShell() {
+  const { resolvedScheme } = useThemeOverride();
+  return (
+    <InventoryProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+      <StatusBar style={resolvedScheme === 'dark' ? 'light' : 'dark'} />
+    </InventoryProvider>
+  );
+}
+
 export default function RootLayout() {
-  const scheme = useColorScheme();
   const fontsLoaded = useAppFonts();
 
   useEffect(() => {
@@ -19,11 +30,8 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <InventoryProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-      </Stack>
-      <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-    </InventoryProvider>
+    <ThemeOverrideProvider>
+      <AppShell />
+    </ThemeOverrideProvider>
   );
 }
